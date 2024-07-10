@@ -1,5 +1,8 @@
-# DT_fullstact
-React, FastAPI, RDBMS, NoSQL 활용 스마트 공장 사이트 프로젝트
+# 스마트 공장 디지털 트윈 사이드 프로젝트
+
+프론트엔드 : React(TypeScript)
+벡엔드 : Fastapi(Python)
+데이터베이스 : Postgresql(ORDBMS)
 
 ```
 DT_full
