@@ -25,8 +25,8 @@ def get_db():
         db.close()
 
 # 사용자 등록
-@app.post("/create_user/", response_model=schemas.User)
-def create_user(user: schemas.User, db: Session = Depends(get_db)):
+@app.post("/create_user/", response_model=schemas.UserCreate)
+def signUp(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
