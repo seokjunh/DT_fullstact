@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 interface SignUpProps {
-  onClose: () => void;
   onSwitchToSignIn: () => void;
 }
 
@@ -35,7 +34,7 @@ const InputField = ({
   </div>
 );
 
-export const SignUp = ({ onClose, onSwitchToSignIn }: SignUpProps) => {
+export const SignUp = ({ onSwitchToSignIn }: SignUpProps) => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,7 +47,8 @@ export const SignUp = ({ onClose, onSwitchToSignIn }: SignUpProps) => {
       const response = await fetch("http://127.0.0.1:8000/create_user", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "accept": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
           username,
@@ -61,7 +61,7 @@ export const SignUp = ({ onClose, onSwitchToSignIn }: SignUpProps) => {
         const data = await response.json();
         console.log(data);
         alert("회원가입이 성공했습니다.");
-        onClose();
+        onSwitchToSignIn();
       } else {
         alert("회원가입이 실패했습니다.");
       }

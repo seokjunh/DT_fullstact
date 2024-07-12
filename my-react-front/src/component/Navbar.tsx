@@ -36,7 +36,7 @@ export const Navbar = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
           <div className="bg-white p-8 rounded-lg w-96">
             {ShowSignIn && <SignIn onClose={closeModal} onSwitchToSignUp={openSignUp}/>}
-            {ShowSignUp && <SignUp onClose={closeModal} onSwitchToSignIn={openSignIn}/>}
+            {ShowSignUp && <SignUp onSwitchToSignIn={openSignIn}/>}
           </div>
         </div>
       )}
