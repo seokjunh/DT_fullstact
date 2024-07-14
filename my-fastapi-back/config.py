@@ -5,7 +5,10 @@ import os
 load_dotenv()
 
 class Settings(BaseSettings):
-    database_url: str = os.getenv("POSTGRES_URL")
+    POSTGRES_URL: str = os.getenv("POSTGRES_URL")
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    ALGORITHM:str = os.getenv("ALGORITHM")
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
     class Config:
         env_flie = ".env"
