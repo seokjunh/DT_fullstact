@@ -1,20 +1,24 @@
-import { SignIn } from "./SignIn";
-import { SignUp } from "./SignUp";
+import { Link, useNavigate } from "react-router-dom";
 import viteLogo from "/vite.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
-  const [ShowSignIn, setShowSignIn] = useState(false);
-  const [ShowSignUp, setShowSignUp] = useState(false);
+  const [isToken, setIsToken] = useState(false);
+  const navigate = useNavigate();
 
-  const openSignIn = () => {
-    setShowSignIn(true);
-    setShowSignUp(false);
+  useEffect(() => {
+    checkToken();
+  }, []);
+
+  const checkToken = () => {
+    const token = sessionStorage.getItem("token");
+    setIsToken(!!token);
   };
 
-  const openSignUp = () => {
-    setShowSignUp(true);
-    setShowSignIn(false);
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    setIsToken(false);
+    navigate("/");
   };
 
   return (
@@ -22,19 +26,16 @@ export const Navbar = () => {
       <div className="flex items-center justify-between h-20 text-white text-2xl z-10">
         <img src={viteLogo} className="h-10 mx-20 cursor-pointer" />
         <div className="flex mx-20 space-x-6 cursor-pointer">
-          <div onClick={() => setShowSignIn(true)}>로그인</div>
-          <div onClick={() => setShowSignUp(true)}>회원가입</div>
+          {!isToken ? (
+            <>
+              <Link to="/signIn">로그인</Link>
+              <Link to="/signUp">회원가입</Link>
+            </>
+          ) : (
+            <div onClick={handleLogout}>로그아웃</div>
+          )}
         </div>
       </div>
-
-      {(ShowSignIn || ShowSignUp) && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
-          <div className="bg-white p-8 rounded-lg w-96">
-            {ShowSignIn && <SignIn onSwitchToSignUp={openSignUp}/>}
-            {ShowSignUp && <SignUp onSwitchToSignIn={openSignIn}/>}
-          </div>
-        </div>
-      )}
     </>
   );
 };
