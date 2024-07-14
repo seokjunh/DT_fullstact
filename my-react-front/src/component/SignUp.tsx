@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 
 interface SignUpProps {
@@ -44,22 +45,13 @@ export const SignUp = ({ onSwitchToSignIn }: SignUpProps) => {
 
   const handleSignUp = async () => {
     if (passwordsMatch) {
-      const response = await fetch("http://127.0.0.1:8000/create_user", {
-        method: "POST",
-        headers: {
-          "accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
+      const response = await axios.post("http://127.0.0.1:8000/signUp", {
+        username: username,
+        email: email,
+        password: password,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
+      if (response) {
         alert("회원가입이 성공했습니다.");
         onSwitchToSignIn();
       } else {
