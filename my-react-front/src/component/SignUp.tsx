@@ -1,39 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-
-interface InputFieldProps {
-  label: string;
-  type: string;
-  placeholder: string;
-  id: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const InputField = ({
-  label,
-  type,
-  placeholder,
-  id,
-  value,
-  onChange,
-}: InputFieldProps) => (
-  <div className="mb-2">
-    <div>{label}</div>
-    <div className="border-2 border-blue-500 h-14 rounded-xl flex items-center p-4">
-      <input
-        type={type}
-        placeholder={placeholder}
-        required
-        className="w-full outline-none"
-        id={id}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
-  </div>
-);
+import { CloseButton } from "./CloseButton";
+import { InputField } from "./InputField";
 
 export const SignUp = () => {
   const [username, setUserName] = useState("");
@@ -71,6 +40,7 @@ export const SignUp = () => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg w-96">
+        <CloseButton />
         <div className="text-center text-3xl font-bold mb-8">SEOKJUN</div>
         <InputField
           label="이름"

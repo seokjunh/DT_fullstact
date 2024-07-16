@@ -1,44 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface InputFieldProps {
-  label: string;
-  type: string;
-  placeholder: string;
-  id: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { CloseButton } from "./CloseButton";
+import { InputField } from "./InputField";
 
 interface SignInResponse {
   access_token: string;
   token_type: string;
 }
-
-const InputField = ({
-  label,
-  type,
-  placeholder,
-  id,
-  value,
-  onChange,
-}: InputFieldProps) => (
-  <div className="mb-4">
-    <div>{label}</div>
-    <div className="border-2 border-blue-500 h-14 rounded-xl flex items-center p-4">
-      <input
-        type={type}
-        placeholder={placeholder}
-        required
-        className="w-full outline-none"
-        id={id}
-        value={value}
-        onChange={onChange}
-      />
-    </div>
-  </div>
-);
 
 export const SignIn = () => {
   const [username, setUsername] = useState("");
@@ -48,8 +17,8 @@ export const SignIn = () => {
   const navigate = useNavigate();
 
   const handleSignUpClick = () => {
-    navigate('/signUp')
-  }
+    navigate("/signUp");
+  };
 
   const handleSignIn = async () => {
     try {
@@ -66,9 +35,9 @@ export const SignIn = () => {
       if (response.status == 200) {
         setLoginCheck(false);
         sessionStorage.setItem("token", response.data.access_token);
-        alert("로그인이 성공했습니다.")
-        navigate("/");
-        // 여기에 로그인 성공 후 처리 로직 추가 (예: 상태 업데이트, 페이지 리다이렉트 등)
+        alert("로그인이 성공했습니다.");
+        window.dispatchEvent(new Event("tokenChange"));
+        setTimeout(() => navigate("/"), 1000);
       }
     } catch (error) {
       setLoginCheck(true);
@@ -78,6 +47,8 @@ export const SignIn = () => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg w-96">
+        <CloseButton />
+
         <div className="text-center text-3xl font-bold mb-8">SEOKJUN</div>
 
         <InputField
